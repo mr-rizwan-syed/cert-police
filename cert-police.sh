@@ -54,9 +54,14 @@ dependency_installer(){
         echo "${YELLOW}[*] Installing jq ${NC}"
         go install -v github.com/projectdiscovery/notify/cmd/notify@latest 2>/dev/null | pv -p -t -e -N "Installing Tool: Notify" >/dev/null
     fi
+    if ! check_exist tlsx; then
+        echo "${YELLOW}[*] Installing jq ${NC}"
+        go install github.com/projectdiscovery/tlsx/cmd/tlsx@latest 2>/dev/null | pv -p -t -e -N "Installing Tool: TLSx" >/dev/null
+    fi
+
 }
 
-required_tools=("pv" "anew" "python3" "pip" "jq" "certspotter" "notify")
+required_tools=("pv" "anew" "python3" "pip" "jq" "certspotter" "notify" "tlsx")
 
 missing_tools=()
 for tool in "${required_tools[@]}"; do
@@ -116,7 +121,7 @@ parse_results() {
 
     # checking if domain already exists in already seen file
     for host in "${unique_subdomains[@]}"; do
-    	[[ ${silent} == true ]] && echo -e "$host" || echo -e "${GREEN}[MATCH]${NC} : $host"
+    	[[ ${silent} == true ]] && echo -e "$host" || echo -e "$host" | tlsx -silent -cn
     	echo -e "$(date +'%Y-%m-%d') $host" | anew -q "$output_file"
     	[[ ${notify} == true ]] && echo -e "$host" | notify -silent >/dev/null 2>&1
     done
@@ -157,10 +162,10 @@ function initiate(){
 
 print_usage() {
 	banner
-	echo $0 --silent --notify --target target.txt
-	echo $0 -s -n -t target.txt
-	echo $0 --add "STRING" --target  target.txt
-	echo $0 -a "STRING" -t target.txt
+	echo $0 --silent --notify --target targets.txt
+	echo $0 -s -n -t targets.txt
+	echo $0 --add "STRING" --target  targets.txt
+	echo $0 -a "STRING" -t targets.txt
 }
 
 
