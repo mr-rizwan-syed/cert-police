@@ -1,1 +1,1 @@
-# Enter domains/keywords to monitor (Only Root domains)
+zendesk.com
