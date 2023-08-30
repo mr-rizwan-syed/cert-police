@@ -18,11 +18,13 @@ CertPolice is a Bash script for monitoring real-time Certificate Transparency (C
 ## Installation
 
    ```bash
-   git clone https://github.com/mr-rizwan-syed/CertPolice.git
+   https://github.com/mr-rizwan-syed/cert-police.git
    cd CertPolice
    chmod +x certpolice.sh
    ./certpolice.sh -t targets.txt
    ```
+# Enter domains/keywords to monitor (Only Root domains)
+```nano targets.txt```
 
 ## Usage
 
