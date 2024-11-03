@@ -48,7 +48,7 @@ dependency_installer(){
     fi
     if ! check_exist certstream; then
         echo "${YELLOW}[*] Installing certstream ${NC}"
-	pip install certstream 2>/dev/null | pv -p -t -e -N "Installing Tool: certstream" >/dev/null
+	pip install certstream --break-system-packages 2>/dev/null | pv -p -t -e -N "Installing Tool: certstream" >/dev/null
     fi
     if ! check_exist notify; then
         echo "${YELLOW}[*] Installing jq ${NC}"
